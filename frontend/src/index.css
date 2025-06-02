@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; 
+
+@layer base {
+  h1 span {
+    font-family: "Liu Jian Mao Cao", cursive;
+  }
+  body {
+    background-color: rgb(241, 245, 241);
+  }
+  html::-webkit-scrollbar {
+    display: none;
+  }
+}
