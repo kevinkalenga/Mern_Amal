@@ -15,6 +15,7 @@ export default function Signup() {
         })
     }
     
+    // fonction permettant à la soumission du formulaire
     const handleSubmit = async(e) => {
         e.preventDefault();
         try {
