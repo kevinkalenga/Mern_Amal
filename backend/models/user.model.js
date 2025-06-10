@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema({
         required: true, 
         unique: true
     },
+    avatar:{
+        type: String,
+        default: "https://randomuser.me/api/portraits/women/16.jpg"
+      },
 }, {
     timestamps: true
 })

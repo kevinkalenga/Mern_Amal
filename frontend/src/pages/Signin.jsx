@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useSelector,  useDispatch} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
 import { signInStart, signInSuccess, signInFailure } from "../redux/user/userSlice.js";
+import OAuth from "../components/OAuth.jsx";
 export default function Signin() {
    
     // Changement d'etat d'un element
@@ -61,6 +62,7 @@ export default function Signin() {
                rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
                   {loading ? 'Loading...' : 'Connectez-vous'}
               </button>
+              <OAuth />
           </form>
           <div className="flex gap-2 mt-5">
               <p>Vous n'avez pas un compte ?</p>
