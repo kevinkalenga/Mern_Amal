@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
     },
     avatar:{
         type: String,
-        default: "https://randomuser.me/api/portraits/men/93.jpg"
+        default: "https://randomuser.me/api/portraits/men/96.jpg"
       },
 }, {
     timestamps: true
