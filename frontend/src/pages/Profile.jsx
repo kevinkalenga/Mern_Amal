@@ -11,7 +11,10 @@ import {
    updateUserSuccess,
    deleteUserFailure,
    deleteUserStart,
-   deleteUserSuccess
+   deleteUserSuccess,
+   signOutUserStart,
+   signOutUserFailure,
+   signOutUserSuccess
   } from "../redux/user/userSlice";
 import { app } from "../firebase";
 
@@ -116,6 +119,20 @@ export default function Profile() {
     }
   }
   
+   const handleSignOut = async () => {
+    try {
+      dispatch(signOutUserStart())
+      const  res = await fetch('/api/auth/signout');
+      const data = await res.json();
+      if(data.success === false) {
+        dispatch(signOutUserFailure(data.message));
+        return;
+      }
+      dispatch(signOutUserSuccess(data))
+    } catch (error) {
+      dispatch(signOutUserFailure(error.message))
+    }
+   }
   
   
   return (
@@ -182,7 +199,7 @@ export default function Profile() {
 
       <div className="flex justify-between mt-5">
         <span onClick={handleDeleteUser} className="text-red-700 cursor-pointer">Supprimer le compte</span>
-        <span className="text-red-700 cursor-pointer">Déconnexion</span>
+        <span onClick={handleSignOut} className="text-red-700 cursor-pointer">Déconnexion</span>
       </div>
 
       {error && <p className="text-red-700">{error}</p>}
