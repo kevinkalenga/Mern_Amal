@@ -8,28 +8,71 @@ export const test = (req, res) => {
     })
 }
 
+// export const updateUser = async (req, res, next) => {
+//     console.log(req.body.user)
+//     if(req.user.id !== req.params.id) 
+//         return next(errorHandler(401, 'Tu peux seulement mettre à jour ton propre compte! ')) ;
+
+//     try {
+//         if(req.body.password) {
+//             req.body.password = bcryptjs.hashSync(req.body.password, 10)
+//         }
+//         const updateUser = await User.findByIdAndUpdate(req.params.id,
+//             {
+//                 $set: {
+//                     username: req.body.username,
+//                     email: req.body.email,
+//                     password: req.body.password,
+//                     avatar: req.body.avatar
+//                 }
+//             },
+//             {new: true}
+//         );
+//         const {password, ...rest} = updateUser._doc;
+//         res.status(200).json(rest)
+//     } catch (error) {
+//         next(error)
+//     }
+// }
+
 export const updateUser = async (req, res, next) => {
-    console.log(req.body.user)
-    if(req.user.id !== req.params.id) 
-        return next(errorHandler(401, 'Tu peux seulement mettre à jour ton propre compte! ')) ;
+    if (req.user.id !== req.params.id) {
+        return next(errorHandler(401, 'Tu peux seulement mettre à jour ton propre compte!'));
+    }
 
     try {
-        if(req.body.password) {
-            req.body.password = bcryptjs.hashSync(req.body.password, 10)
+        const updates = {};
+
+        // Only set the fields that exist in the request body
+        if (req.body.username) updates.username = req.body.username;
+        if (req.body.email) updates.email = req.body.email;
+        if (req.body.avatar) updates.avatar = req.body.avatar;
+        if (req.body.password) {
+            updates.password = bcryptjs.hashSync(req.body.password, 10);
         }
-        const updateUser = await User.findByIdAndUpdate(req.params.id,
-            {
-                $set: {
-                    username: req.body.username,
-                    email: req.body.email,
-                    password: req.body.password,
-                    avatar: req.body.avatar
-                }
-            },
-            {new: true}
+
+        const updatedUser = await User.findByIdAndUpdate(
+            req.params.id,
+            { $set: updates },
+            { new: true }
         );
-        const {password, ...rest} = updateUser._doc;
-        res.status(200).json(rest)
+
+        const { password, ...rest } = updatedUser._doc;
+        res.status(200).json(rest);
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const deleteUser = async (req, res, next) => {
+    if(req.user.id !==  req.params.id) {
+        return next(errorHandler(401, "Tu ne peux seulement supprimer ton propre compte!"))
+    }
+
+    try {
+        await User.findByIdAndDelete(req.params.id);
+        res.clearCookie('acess_token')
+        res.status(200).json("L'utilisateur supprimé")
     } catch (error) {
         next(error)
     }
