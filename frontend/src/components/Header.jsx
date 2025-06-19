@@ -5,7 +5,7 @@ function Header() {
      const {currentUser} = useSelector((state) => state.user)
     return (
        <header className="bg-slate-200 shadow-md">
-          <div className="flex justify-between items-center max-w-6xl mx-auto">
+          <div className="flex justify-between items-center max-w-6xl mx-auto py-2">
              <Link to='/'>
                 <h1 className='font-bold text-3xl sm:text-xl flex flex-wrap uppercase'>
                     <span className='text-slate-500'>Immo</span>
