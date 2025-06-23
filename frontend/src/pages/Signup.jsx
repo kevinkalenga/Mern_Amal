@@ -31,7 +31,7 @@ export default function Signup() {
             // reponse du backend
             const data = await res.json();
             // si ça ne se passe pas bien (message d'erreur)
-            if(data.succes === false) {
+            if(data.success === false) {
                 setLoading(false);
                 setError(data.message);
                 return;
