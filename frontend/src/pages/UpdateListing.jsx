@@ -153,7 +153,7 @@ export default function UpdateListing() {
             setLoading(true)
             setError(false) 
 
-            const res = await fetch(`api/listing/update/${params.listingId}`, {
+            const res = await fetch(`/api/listing/update/${params.listingId}`, {
                method: 'POST',
                headers: {
                   'Content-Type': 'application/json',
@@ -184,7 +184,7 @@ export default function UpdateListing() {
     
       
     <main className="p-3 max-w-4xl mx-auto">
-          <h1 className="text-3xl font-semibold text-center my-7"></h1>
+          <h1 className="text-3xl font-semibold text-center my-7">Mettre à jour une annonce</h1>
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
             <div className="flex flex-col gap-4 flex-1">
               <input type="text" placeholder="Nom"
