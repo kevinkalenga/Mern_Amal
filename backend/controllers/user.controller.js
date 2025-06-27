@@ -67,3 +67,15 @@ export const getUserListings = async (req, res, next) => {
         return next(errorHandler(401, 'Tu ne peux voir que tes propres annonces!'))
     }
 }
+
+// fonction permettant de recup le user qui va contacter le proprietaire 
+export const getUser = async (req, res, next) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if(!user) return next(errorHandler(404, "L'utilisateur non trouvé"))
+        const {password: pass, ...rest} = user._doc;
+        res.status(200).json(rest)
+    } catch (error) {
+        next(error)
+    }
+}
